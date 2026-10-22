@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brew &amp; Bean Coffee House — Fresh Coffee, Baked Daily | Demo by Dinal Studios</title>
+<meta name="description" content="Brew & Bean Coffee House demo website: full coffee menu with prices, freshly baked goods, opening hours and online order form. Demo project by Dinal Studios — custom coffee shop websites available for order.">
+<style>
+  :root{
+    --brown:#3b2314; --coffee:#6f4e37; --cream:#f7f1e8; --tan:#e8d9c5;
+    --accent:#c08552; --accent-dark:#a06a3c; --ink:#2b211b; --muted:#7a6a5e;
+    --radius:14px; --shadow:0 10px 30px rgba(59,35,20,.12);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--cream);line-height:1.6}
+  img,svg{display:block;max-width:100%}
+  .container{width:min(1140px,92%);margin:0 auto}
+  a{text-decoration:none;color:inherit}
+  .btn{display:inline-block;padding:.85rem 1.7rem;border-radius:999px;font-weight:600;transition:.25s;border:2px solid transparent;cursor:pointer;font-size:1rem}
+  .btn-primary{background:var(--accent);color:#fff}
+  .btn-primary:hover{background:var(--accent-dark);transform:translateY(-2px)}
+  .btn-outline{border-color:#fff;color:#fff;background:transparent}
+  .btn-outline:hover{background:#fff;color:var(--brown)}
+  .btn-dark{background:var(--brown);color:#fff}
+  .btn-dark:hover{background:var(--coffee)}
+  section{padding:4.5rem 0}
+  .section-head{text-align:center;max-width:640px;margin:0 auto 3rem}
+  .section-head .kicker{text-transform:uppercase;letter-spacing:.22em;font-size:.78rem;font-weight:700;color:var(--accent)}
+  .section-head h2{font-size:clamp(1.8rem,4vw,2.6rem);color:var(--brown);margin:.5rem 0 .8rem;line-height:1.15}
+  .section-head p{color:var(--muted)}
+  header{position:fixed;inset:0 0 auto 0;z-index:50;background:rgba(59,35,20,.92);backdrop-filter:blur(8px)}
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:.9rem 0}
+  .logo{display:flex;align-items:center;gap:.6rem;color:#fff;font-weight:800;font-size:1.25rem;letter-spacing:.02em}
+  .logo svg{width:34px;height:34px}
+  .nav-links{display:flex;gap:2rem;list-style:none}
+  .nav-links a{color:#f3e7d7;font-weight:500;font-size:.98rem}
+  .nav-links a:hover{color:var(--accent)}
+  .nav-cta{display:inline-block}
+  .burger{display:none;background:none;border:0;cursor:pointer;padding:.4rem}
+  .burger span{display:block;width:26px;height:3px;background:#fff;margin:5px 0;border-radius:2px}
+  .hero{min-height:100vh;display:flex;align-items:center;color:#fff;text-align:center;padding:8rem 0 5rem;
+    background:
+      radial-gradient(ellipse at 20% 20%, rgba(192,133,82,.45), transparent 55%),
+      radial-gradient(ellipse at 85% 80%, rgba(111,78,55,.6), transparent 55%),
+      linear-gradient(160deg,#241407 0%,#3b2314 45%,#5a3a22 100%)}
+  .hero .badge{display:inline-block;border:1px solid rgba(255,255,255,.4);padding:.35rem 1rem;border-radius:999px;font-size:.85rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:1.4rem}
+  .hero h1{font-size:clamp(2.4rem,6.5vw,4.4rem);line-height:1.08;margin-bottom:1.1rem}
+  .hero h1 em{font-style:normal;color:var(--accent)}
+  .hero p{max-width:620px;margin:0 auto 2.2rem;font-size:1.12rem;color:#efe3d3}
+  .hero-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+  .hero-stats{display:flex;gap:2.5rem;justify-content:center;margin-top:3.2rem;flex-wrap:wrap}
+  .hero-stats div{text-align:center}
+  .hero-stats strong{display:block;font-size:1.6rem;color:#fff}
+  .hero-stats span{font-size:.85rem;color:#d8c6ae;text-transform:uppercase;letter-spacing:.1em}
+  .menu-tabs{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;margin-bottom:2.5rem}
+  .tab{padding:.55rem 1.4rem;border-radius:999px;border:2px solid var(--tan);background:#fff;font-weight:600;cursor:pointer;color:var(--coffee);transition:.2s}
+  .tab.active,.tab:hover{background:var(--coffee);color:#fff;border-color:var(--coffee)}
+  .menu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.4rem}
+  .menu-item{background:#fff;border-radius:var(--radius);padding:1.5rem;box-shadow:var(--shadow);display:flex;gap:1.1rem;align-items:flex-start}
+  .menu-item .icon{flex:0 0 58px;width:58px;height:58px;border-radius:14px;background:linear-gradient(135deg,var(--tan),#d9c3a3);display:flex;align-items:center;justify-content:center}
+  .menu-item .icon svg{width:30px;height:30px}
+  .menu-item h3{font-size:1.08rem;color:var(--brown);display:flex;justify-content:space-between;gap:.8rem}
+  .menu-item h3 .price{color:var(--accent-dark);white-space:nowrap}
+  .menu-item p{font-size:.92rem;color:var(--muted);margin-top:.3rem}
+  .menu-item .tag{display:inline-block;margin-top:.55rem;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:#f3e7d3;color:var(--accent-dark);padding:.2rem .6rem;border-radius:999px}
+  .about{background:#fff}
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center}
+  .about-art{border-radius:20px;min-height:340px;background:
+      radial-gradient(circle at 30% 30%, rgba(255,255,255,.25), transparent 40%),
+      linear-gradient(140deg,var(--coffee),var(--brown));display:flex;align-items:center;justify-content:center;padding:2rem}
+  .about-art svg{width:180px;height:180px;opacity:.95}
+  .about h2{font-size:clamp(1.8rem,4vw,2.4rem);color:var(--brown);margin-bottom:1rem;line-height:1.2}
+  .about p{color:var(--muted);margin-bottom:1rem}
+  .about ul{list-style:none;margin:1.2rem 0 1.8rem}
+  .about li{padding:.45rem 0 .45rem 1.9rem;position:relative;font-weight:500}
+  .about li::before{content:"";position:absolute;left:0;top:.85rem;width:.85rem;height:.85rem;border-radius:50%;background:var(--accent)}
+  .visit-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:2.5rem;align-items:start}
+  .hours-card{background:var(--brown);color:#f3e7d7;border-radius:20px;padding:2.2rem}
+  .hours-card h3{color:#fff;font-size:1.4rem;margin-bottom:1.2rem}
+  .hours-row{display:flex;justify-content:space-between;padding:.65rem 0;border-bottom:1px dashed rgba(255,255,255,.25)}
+  .hours-row:last-of-type{border-bottom:0}
+  .hours-row.today{color:#fff;font-weight:700}
+  .hours-card .note{margin-top:1.2rem;font-size:.9rem;color:#d8c6ae}
+  form.order-form{background:#fff;border-radius:20px;padding:2.2rem;box-shadow:var(--shadow)}
+  form.order-form h3{color:var(--brown);font-size:1.4rem;margin-bottom:1.2rem}
+  .field{margin-bottom:1rem}
+  .field label{display:block;font-weight:600;font-size:.92rem;margin-bottom:.35rem;color:var(--coffee)}
+  .field input,.field select,.field textarea{width:100%;padding:.75rem .9rem;border:2px solid var(--tan);border-radius:10px;font:inherit;background:#fdfaf6}
+  .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--accent)}
+  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+  .form-msg{display:none;margin-top:1rem;padding:.9rem 1.1rem;border-radius:10px;background:#e9f6ec;color:#1d6b2c;font-weight:600}
+  footer{background:#241407;color:#cbb79e;padding:3.5rem 0 2rem}
+  .footer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2rem;margin-bottom:2.5rem}
+  footer h4{color:#fff;margin-bottom:.9rem;font-size:1.05rem}
+  footer p,footer li{font-size:.93rem}
+  footer ul{list-style:none}
+  footer li{padding:.25rem 0}
+  .demo-note{border-top:1px solid rgba(255,255,255,.15);padding-top:1.6rem;text-align:center;font-size:.9rem}
+  .demo-note a{color:var(--accent);font-weight:700}
+  @media (max-width:860px){
+    .about-grid,.visit-grid{grid-template-columns:1fr}
+    .nav-links{position:absolute;top:100%;left:0;right:0;background:var(--brown);flex-direction:column;padding:1.2rem 5%;gap:1rem;display:none}
+    .nav-links.open{display:flex}
+    .nav-cta{display:none}
+    .burger{display:block}
+    .field-row{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container nav">
+    <a class="logo" href="#top" aria-label="Brew and Bean home">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#c08552" stroke-width="1.8" stroke-linecap="round"><path d="M4 9h13v6a5 5 0 0 1-5 5h-3a5 5 0 0 1-5-5V9z"/><path d="M17 10h1.5a2.5 2.5 0 0 1 0 5H17"/><path d="M8 3c0 1.2-1 1.3-1 2.5M12 3c0 1.2-1 1.3-1 2.5"/></svg>
+      Brew &amp; Bean
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#visit">Hours &amp; Order</a></li>
+      <li><a href="#order-form">Order Online</a></li>
+    </ul>
+    <a class="btn btn-primary nav-cta" href="https://laborx.com/freelancers/users/id474525" target="_blank" rel="noopener">Order a website like this</a>
+    <button class="burger" id="burger" aria-label="Open menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div class="container">
+    <span class="badge">Freshly Brewed Every Morning</span>
+    <h1>Great Coffee,<br><em>Simple Moments.</em></h1>
+    <p>Small-batch roasted beans, honest prices and a warm corner to slow down. Espresso, lattes, fresh bakes — made to order, every single day.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#menu">See the Menu</a>
+      <a class="btn btn-outline" href="#order-form">Order for Pickup</a>
+    </div>
+    <div class="hero-stats">
+      <div><strong>25+</strong><span>Drinks &amp; Bakes</span></div>
+      <div><strong>100%</strong><span>Arabica Beans</span></div>
+      <div><strong>7 Days</strong><span>Open Weekly</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="menu">
+  <div class="container">
+    <div class="section-head">
+      <span class="kicker">Our Menu</span>
+      <h2>Made Fresh, Priced Fair</h2>
+      <p>Every drink is brewed to order. Prices include tax — no surprises at the counter.</p>
+    </div>
+    <div class="menu-tabs" role="tablist">
+      <button class="tab active" data-filter="all">All Items</button>
+      <button class="tab" data-filter="coffee">Coffee</button>
+      <button class="tab" data-filter="cold">Cold Drinks</button>
+      <button class="tab" data-filter="bakery">Bakery</button>
+    </div>
+    <div class="menu-grid" id="menuGrid"></div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="container about-grid">
+    <div class="about-art" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#f7f1e8" stroke-width="1.1" stroke-linecap="round"><path d="M4 10h13v5a5 5 0 0 1-5 5h-3a5 5 0 0 1-5-5v-5z"/><path d="M17 11h1.2a2.2 2.2 0 0 1 0 4.4H17"/><path d="M7.5 3.5c0 1.4-1.2 1.6-1.2 3M11.5 3.5c0 1.4-1.2 1.6-1.2 3M15.5 3.5c0 1.4-1.2 1.6-1.2 3"/><circle cx="12" cy="12" r="10.5" stroke-dasharray="2 3"/></svg>
+    </div>
+    <div>
+      <span class="kicker" style="text-transform:uppercase;letter-spacing:.22em;font-size:.78rem;font-weight:700;color:var(--accent)">Our Story</span>
+      <h2>A Small Shop With a Big Love for Coffee</h2>
+      <p>Brew &amp; Bean started with one simple idea: serve coffee the way it should taste — fresh beans, ground seconds before brewing, and milk steamed to silk. No shortcuts, no stale pots sitting on warmers.</p>
+      <p>Our beans come from small farms and are roasted in small batches each week, so every cup tastes alive. Pair it with a croissant baked in-house this morning and you have the best part of your day.</p>
+      <ul>
+        <li>Beans roasted in-house every week</li>
+        <li>Bakery items baked fresh each morning</li>
+        <li>Oat, almond and soy milk at no extra charge</li>
+        <li>Free Wi-Fi and plenty of power sockets</li>
+      </ul>
+      <a class="btn btn-dark" href="#visit">Visit Us Today</a>
+    </div>
+  </div>
+</section>
+
+<section id="visit">
+  <div class="container">
+    <div class="section-head">
+      <span class="kicker">Visit Us</span>
+      <h2>Opening Hours &amp; Pickup Orders</h2>
+      <p>Walk in, call ahead, or send a pickup order with the form — we will have it hot and ready.</p>
+    </div>
+    <div class="visit-grid">
+      <div class="hours-card">
+        <h3>Opening Hours</h3>
+        <div class="hours-row" data-day="1"><span>Monday</span><span>7:00 AM – 9:00 PM</span></div>
+        <div class="hours-row" data-day="2"><span>Tuesday</span><span>7:00 AM – 9:00 PM</span></div>
+        <div class="hours-row" data-day="3"><span>Wednesday</span><span>7:00 AM – 9:00 PM</span></div>
+        <div class="hours-row" data-day="4"><span>Thursday</span><span>7:00 AM – 9:00 PM</span></div>
+        <div class="hours-row" data-day="5"><span>Friday</span><span>7:00 AM – 10:00 PM</span></div>
+        <div class="hours-row" data-day="6"><span>Saturday</span><span>8:00 AM – 10:00 PM</span></div>
+        <div class="hours-row" data-day="0"><span>Sunday</span><span>8:00 AM – 8:00 PM</span></div>
+        <p class="note">Kitchen closes 30 minutes before closing time. Holiday hours may differ — call to confirm.</p>
+      </div>
+      <form class="order-form" id="order-form">
+        <h3>Order for Pickup</h3>
+        <div class="field-row">
+          <div class="field">
+            <label for="oName">Your Name</label>
+            <input id="oName" type="text" placeholder="e.g. Alex Smith" required>
+          </div>
+          <div class="field">
+            <label for="oPhone">Phone Number</label>
+            <input id="oPhone" type="tel" placeholder="e.g. 555 010 2233" required>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="oItem">Choose an Item</label>
+            <select id="oItem" required></select>
+          </div>
+          <div class="field">
+            <label for="oQty">Quantity</label>
+            <input id="oQty" type="number" min="1" max="20" value="1" required>
+          </div>
+        </div>
+        <div class="field">
+          <label for="oTime">Pickup Time</label>
+          <input id="oTime" type="time" required>
+        </div>
+        <div class="field">
+          <label for="oNotes">Notes (optional)</label>
+          <textarea id="oNotes" rows="3" placeholder="Less sugar, extra shot, oat milk..."></textarea>
+        </div>
+        <button class="btn btn-primary" type="submit" style="width:100%">Place Pickup Order</button>
+        <div class="form-msg" id="orderMsg"></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h4>Brew &amp; Bean Coffee House</h4>
+        <p>Fresh coffee, honest prices and a warm seat waiting for you. Demo address: 12 Market Street, City Center.</p>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#menu">Menu</a></li>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#visit">Opening Hours</a></li>
+          <li><a href="#order-form">Order for Pickup</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li>Phone: (555) 010-2233</li>
+          <li>Email: hello@brewandbean.example</li>
+          <li>12 Market Street, City Center</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Want This Website?</h4>
+        <p>This design can be customized with your shop name, your menu and your prices — delivered fast and mobile-friendly.</p>
+        <p style="margin-top:.8rem"><a class="btn btn-primary" href="https://laborx.com/freelancers/users/id474525" target="_blank" rel="noopener">Order a website like this</a></p>
+      </div>
+    </div>
+    <div class="demo-note">
+      <p>Demo project by <strong>Dinal Studios</strong> — available for custom order. Brew &amp; Bean is a fictional demo brand created to showcase website design work; it is not a real business.</p>
+      <p style="margin-top:.5rem">&copy; 2026 Dinal Studios. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const MENU = [
+    {name:"Espresso", price:2.50, cat:"coffee", desc:"Double shot of our house roast. Rich, bold and smooth with a golden crema.", tag:"Classic"},
+    {name:"Cappuccino", price:3.80, cat:"coffee", desc:"Equal parts espresso, steamed milk and airy foam, dusted with cocoa.", tag:"Most Loved"},
+    {name:"Cafe Latte", price:4.20, cat:"coffee", desc:"Silky steamed milk over a double espresso. Gentle, creamy, comforting.", tag:""},
+    {name:"Caramel Macchiato", price:4.90, cat:"coffee", desc:"Vanilla milk, espresso and a caramel drizzle on top. Sweet in every sip.", tag:"Sweet Pick"},
+    {name:"Mocha", price:4.60, cat:"coffee", desc:"Espresso blended with Belgian chocolate and steamed milk, topped with cream.", tag:""},
+    {name:"Americano", price:3.00, cat:"coffee", desc:"Double espresso lengthened with hot water. Clean taste, full strength.", tag:""},
+    {name:"Iced Latte", price:4.40, cat:"cold", desc:"Chilled milk and double espresso over ice. Simple, cold and refreshing.", tag:"Summer Hit"},
+    {name:"Cold Brew", price:4.80, cat:"cold", desc:"Steeped for 18 hours for a naturally sweet, extra-smooth finish.", tag:"18h Steep"},
+    {name:"Iced Caramel Coffee", price:5.10, cat:"cold", desc:"Cold coffee, caramel syrup and cream over crushed ice.", tag:""},
+    {name:"Fresh Lemonade", price:3.20, cat:"cold", desc:"Hand-pressed lemons, a touch of honey and sparkling water.", tag:""},
+    {name:"Butter Croissant", price:2.90, cat:"bakery", desc:"Flaky, golden and baked in-house this morning. Best warm.", tag:"Baked Today"},
+    {name:"Blueberry Muffin", price:3.10, cat:"bakery", desc:"Soft crumb loaded with real blueberries and a crunchy top.", tag:""},
+    {name:"Chocolate Brownie", price:3.40, cat:"bakery", desc:"Dense, fudgy and made with 70% dark chocolate.", tag:""},
+    {name:"Banana Bread Slice", price:2.70, cat:"bakery", desc:"Moist, lightly spiced and toasted on request with butter.", tag:""},
+    {name:"Cheese Danish", price:3.30, cat:"bakery", desc:"Buttery pastry with a smooth cream-cheese center.", tag:"New"}
+  ];
+  const cupSVG = '<svg viewBox="0 0 24 24" fill="none" stroke="#6f4e37" stroke-width="1.7" stroke-linecap="round"><path d="M4 9h13v6a5 5 0 0 1-5 5h-3a5 5 0 0 1-5-5V9z"/><path d="M17 10h1.5a2.5 2.5 0 0 1 0 5H17"/><path d="M8 3c0 1.2-1 1.3-1 2.5M12 3c0 1.2-1 1.3-1 2.5"/></svg>';
+  const grid = document.getElementById('menuGrid');
+  function renderMenu(filter){
+    grid.innerHTML = MENU.filter(i => filter==='all' || i.cat===filter).map(i => `
+      <article class="menu-item">
+        <div class="icon">${cupSVG}</div>
+        <div style="flex:1">
+          <h3>${i.name}<span class="price">$${i.price.toFixed(2)}</span></h3>
+          <p>${i.desc}</p>
+          ${i.tag ? `<span class="tag">${i.tag}</span>` : ``}
+        </div>
+      </article>`).join('');
+  }
+  renderMenu('all');
+  document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+    t.classList.add('active');
+    renderMenu(t.dataset.filter);
+  }));
+  const itemSelect = document.getElementById('oItem');
+  itemSelect.innerHTML = MENU.map(i => `<option value="${i.name}" data-price="${i.price}">${i.name} — $${i.price.toFixed(2)}</option>`).join('');
+  document.getElementById('order-form').addEventListener('submit', e => {
+    e.preventDefault();
+    const name = document.getElementById('oName').value.trim();
+    const qty = parseInt(document.getElementById('oQty').value, 10) || 1;
+    const opt = itemSelect.selectedOptions[0];
+    const total = (parseFloat(opt.dataset.price) * qty).toFixed(2);
+    const time = document.getElementById('oTime').value;
+    const msg = document.getElementById('orderMsg');
+    msg.style.display = 'block';
+    msg.textContent = `Thank you, ${name}! Your order (${qty} x ${opt.value} — $${total}) will be ready for pickup at ${time}. This is a front-end demo, so no real order was sent.`;
+    e.target.reset();
+    itemSelect.selectedIndex = 0;
+    document.getElementById('oQty').value = 1;
+  });
+  const today = new Date().getDay();
+  document.querySelectorAll('.hours-row').forEach(r => {
+    if (parseInt(r.dataset.day, 10) === today) {
+      r.classList.add('today');
+      r.querySelector('span:last-child').textContent += '  (Today)';
+    }
+  });
+  const burger = document.getElementById('burger');
+  const links = document.getElementById('navLinks');
+  burger.addEventListener('click', () => links.classList.toggle('open'));
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
+</script>
+</body>
+</html>
